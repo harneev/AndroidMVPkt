@@ -4,8 +4,10 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import ca.harneev.bean.Book
-import ca.harneev.contract.ViewContract
+import ca.harneev.view.ViewContract
+import ca.harneev.model.NetworkService
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        presenter = Presenter(ViewContractImpl(), ModelContractImpl())
+        presenter = Presenter(ViewContractImpl(), NetworkService().getService())
         presenter.getBookList()
     }
 
@@ -39,6 +41,10 @@ class MainActivity : AppCompatActivity() {
             this@MainActivity.runOnUiThread(Runnable {
                 drawBookList(bookList)
             })
+        }
+
+        override fun showError(errorMessage: String) {
+            Toast.makeText(this@MainActivity, errorMessage, Toast.LENGTH_LONG).show()
         }
     }
 }

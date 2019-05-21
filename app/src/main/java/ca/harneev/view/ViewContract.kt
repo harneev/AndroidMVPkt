@@ -1,4 +1,4 @@
-package ca.harneev.contract
+package ca.harneev.view
 
 import ca.harneev.bean.Book
 
@@ -8,4 +8,6 @@ import ca.harneev.bean.Book
 interface ViewContract {
 
     fun showBookList(bookList: List<Book>)
+
+    fun showError(errorMessage:String)
 }

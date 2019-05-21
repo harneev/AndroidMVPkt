@@ -1,26 +1,29 @@
 package ca.harneev
 
 import ca.harneev.bean.Book
-import ca.harneev.contract.ModelContract
-import ca.harneev.contract.ViewContract
-import com.nhaarman.mockitokotlin2.any
+import ca.harneev.model.ApiService
+import ca.harneev.view.ViewContract
+import ca.harneev.model.scheduler.TrampolineScheduler
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.*
-import org.mockito.junit.MockitoJUnitRunner
 import com.nhaarman.mockitokotlin2.argumentCaptor
+import com.nhaarman.mockitokotlin2.given
+import io.reactivex.Single
 import org.junit.Assert
-import org.mockito.ArgumentMatchers.anyObject
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
 /**
  * @author Harneev Sethi
  */
-@RunWith(MockitoJUnitRunner::class)
+@RunWith(RobolectricTestRunner::class)
+@Config(manifest = Config.NONE)
 class PresenterTest {
 
     @Mock
-    lateinit var model: ModelContract
+    lateinit var service: ApiService
 
     @Mock
     lateinit var view: ViewContract
@@ -31,20 +34,13 @@ class PresenterTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
 
-        presenter = Presenter(view, model)
+        presenter = Presenter(view, service, TrampolineScheduler())
     }
 
     @Test
     fun `test if books are displayed`() {
         // given
-        Mockito.`when`(model.getBookList(any())).then {
-            view.showBookList(
-                arrayListOf(
-                    Book("1", "Ice and Fire"),
-                    Book("2", "Harry Potter")
-                )
-            )
-        }
+        given(service.getBooks()).willReturn(Single.just(Book("1", "John Snow")))
 
         // when
         presenter.getBookList()
