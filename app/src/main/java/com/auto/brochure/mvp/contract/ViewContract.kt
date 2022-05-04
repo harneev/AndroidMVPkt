@@ -11,8 +11,12 @@ import com.auto.brochure.mvp.TrimDetails
 interface ViewContract {
 
     fun displayCarManufacturers(list: List<CarMake>)
+
     fun displayModelsOfBrand(manufacturerCode: String, list: List<MakeModel>)
+
     fun displayModelTrims(modelCode: Int, list: List<ModelTrim>)
+
     fun displayTrimDetails(trimCode: String, list: List<TrimDetails>)
+
     fun showError(errorMessage: String)
 }

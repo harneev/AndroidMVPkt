@@ -1,4 +1,4 @@
-package ca.harneev
+package com.auto.brochure.mvp.contract
 
 import com.auto.brochure.mvp.contract.Presenter
 import com.auto.brochure.mvp.model.RetrofitApiService

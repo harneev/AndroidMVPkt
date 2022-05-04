@@ -10,13 +10,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object AppDI {
 
-    const val BASE_URL = "https://parallelum.com.br/fipe/api/v1/"
+    private const val BASE_URL = "https://parallelum.com.br/fipe/api/v1/"
 
-    val httpLoggingInterceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
-        setLevel(HttpLoggingInterceptor.Level.BODY)
-    }
-
-    private fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor) = OkHttpClient.Builder()
+    private fun provideOkHttpClient(
+        loggingInterceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
+            setLevel(HttpLoggingInterceptor.Level.BODY)
+        }
+    ) = OkHttpClient.Builder()
         .addInterceptor(loggingInterceptor)
         .build()
 
@@ -30,9 +30,7 @@ object AppDI {
 
     fun provideModel(): ModelContract = ModelImpl(
         providerRetrofitApiService(
-            provideOkHttpClient(
-                httpLoggingInterceptor
-            )
+            provideOkHttpClient()
         )
     )
 }

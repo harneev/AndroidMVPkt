@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import ca.harneev.*
+import com.auto.brochure.mvp.R
 
 class RecyclerAdapter<T>(
     private val displayList: List<T>,
